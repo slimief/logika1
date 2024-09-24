@@ -1,0 +1,36 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+int main()  {
+setlocale(LC_ALL, "Russian");
+srand(time(NULL)); 
+
+const int ROWS = 4;
+const int COLS = 4;
+int mass[ROWS][COLS];
+int sumJ;
+int col =0;
+int* p2 = &mass[0][0];
+for (int i = 0; i < ROWS; i++)
+{
+for (int j = 0; j < COLS; j++)
+{
+*(p2 + i * 100 + j) = rand() % 9;
+printf("%d ", *(p2 + i * 100 + j));
+}
+printf("\n");
+}
+printf("\n");
+for (int i = 0; i < ROWS; i++)
+{
+sumJ = 0;
+col += 1;
+for (int j = 0; j < COLS; j++)
+{
+sumJ += *(p2 + i + j * 100);
+}
+printf("Сумма всех элементов в %d столбце: %d\n", col, sumJ);
+}
+return 0;
+}
