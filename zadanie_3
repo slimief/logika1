@@ -1,0 +1,56 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <time.h>
+#include <iostream>
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    int cols, rows;
+    int row, sum;
+    printf("Введите количество столбцов: ");
+    scanf("%d", &cols);
+    printf("\nВведите количество строк: ");
+    scanf("%d", &rows);
+
+    // Динамическое выделение памяти для двумерного массива
+    int** a = new int* [rows];
+    for (int i = 0; i < rows; i++) {
+        a[i] = new int[cols];
+    }
+
+    srand(time(NULL));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            a[i][j] = (rand() % 100) - 50;
+        }
+    }
+
+    printf("\nСгенерированный массив:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\n");
+    }
+
+    for (int i = 0; i < rows; i++) {
+        sum = 0;
+        for (int j = 0; j < cols; j++) {
+            if (a[i][j] > 0) {
+                sum += a[i][j];
+            }
+        }
+        printf("\nСумма положительных элементов в строке %d: %d\n", i+1, sum);
+    }
+
+    // Освобождение выделенной памяти
+    for (int i = 0; i < rows; i++) {
+        delete[] a[i];
+    }
+    delete[] a;
+
+    _getch();
+    return 0;
+}
