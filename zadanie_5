@@ -1,0 +1,92 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <locale.h>
+
+#define MAX_STUDENTS 100
+#define NAME_LENGTH 50
+
+struct student {
+	char surname[NAME_LENGTH];
+	char name[NAME_LENGTH];
+	int age;
+	char major[NAME_LENGTH];
+};
+
+void search_students(struct student students[], int count, const char* surname, const char* name) {
+	int found = 0;
+	for (int i = 0; i < count; i++) {
+		// Если указаны фамилия и имя для поиска
+		int surname_match = (surname == NULL || strcmp(students[i].surname, surname) == 0);
+		int name_match = (name == NULL || strcmp(students[i].name, name) == 0);
+
+		if (surname_match && name_match) {
+			printf("Найден студент: %s %s, Возраст: %d, Предмет: %s\n",
+				students[i].surname, students[i].name, students[i].age, students[i].major);
+			found = 1;
+		}
+	}
+
+	if (!found) {
+		printf("Студенты не найдены.\n");
+	}
+}
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	struct student students[MAX_STUDENTS] = {
+		{ "Ivanov", "Ivan", 20, "Физика" },
+		{ "Petrov", "Sergey", 22, "Математика" },
+		{ "Sidorov", "Aleksey", 21, "Программирование" },
+		{ "Ivanov", "Anna", 19, "Литература" },
+	};
+
+	int num_students = 4;
+	char nn[NAME_LENGTH] = "";
+	char ff[NAME_LENGTH] = "";
+	const char* surname_to_search = NULL;
+	const char* name_to_search = NULL;
+	printf("введите цифру: \n");
+	printf("1.ток фамилия \n");
+	printf("2.ток имя \n");
+	printf("3. и то и другое \n");
+	printf("4.выход \n");
+	while (1) {
+		char sifra;
+		scanf("%c", &sifra);
+		switch (sifra) {
+		case '1':
+			printf("введите фамилию: ");
+			scanf("%s", nn);
+			surname_to_search = nn;
+			name_to_search = NULL;
+			search_students(students, num_students, surname_to_search, name_to_search);
+			break;
+		case '2':
+			printf("Введите имя: ");
+			scanf("%s", ff);
+			name_to_search = ff;
+			surname_to_search = NULL;
+			search_students(students, num_students, surname_to_search, name_to_search);
+			break;
+		case '3':
+			printf("введите фамилию: ");
+			scanf("%s", nn);
+			surname_to_search = nn;
+			printf("Введите имя: ");
+			scanf("%s", ff);
+			name_to_search = ff;
+			search_students(students, num_students, surname_to_search, name_to_search);
+			break;
+		case '4':
+			return 1;
+		default:
+			break;
+		}
+	}
+	return 0;
+}
